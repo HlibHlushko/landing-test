@@ -1,0 +1,434 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const img = (id: string, w = 800) =>
+  `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=70`;
+
+const features = [
+  {
+    icon: '🦮',
+    title: 'Loyal companions',
+    text: 'Dogs have lived alongside people for over 15,000 years and read our moods better than almost any other animal.',
+  },
+  {
+    icon: '🏃',
+    title: 'Built-in fitness coach',
+    text: 'Daily walks keep both of you active. Dog owners walk, on average, far more than people without dogs.',
+  },
+  {
+    icon: '❤️',
+    title: 'Good for your health',
+    text: 'Time with a dog is linked to lower stress, lower blood pressure and less loneliness.',
+  },
+];
+
+const breeds = [
+  { name: 'Golden Retriever', trait: 'Friendly & family-loving', photo: img('photo-1552053831-71594a27632d') },
+  { name: 'Border Collie', trait: 'Brilliant & energetic', photo: img('photo-1503256207526-0d5d80fa2f47') },
+  { name: 'French Bulldog', trait: 'Playful & apartment-friendly', photo: img('photo-1583337130417-3346a1be7dee') },
+  { name: 'Siberian Husky', trait: 'Adventurous & talkative', photo: img('photo-1605568427561-40dd23c2acea') },
+];
+
+const facts = [
+  { value: '340+', label: 'recognised breeds' },
+  { value: '40×', label: 'better sense of smell' },
+  { value: '250', label: 'words a smart dog can learn' },
+];
+
+const tips = [
+  'Match the breed’s energy to your lifestyle.',
+  'Budget for food, vet visits and insurance.',
+  'Start training and socialising early.',
+  'Consider adopting from a local shelter.',
+];
+---
+
+<Layout title="Good Dogs — Your guide to life with a dog">
+  <header class="nav">
+    <a href="./" class="logo">🐾 Good Dogs</a>
+    <nav>
+      <a href="#why">Why dogs</a>
+      <a href="#breeds">Breeds</a>
+      <a href="#adopt">Adopt</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-text">
+        <p class="eyebrow">Man’s best friend</p>
+        <h1>Life is better with a dog by your side.</h1>
+        <p class="lead">
+          Discover popular breeds, fun facts and everything you need to know before welcoming a
+          four-legged friend into your home.
+        </p>
+        <div class="cta-row">
+          <a class="btn primary" href="#adopt">Find your dog</a>
+          <a class="btn ghost" href="#breeds">Explore breeds</a>
+        </div>
+      </div>
+      <img
+        class="hero-img"
+        src={img('photo-1543466835-00a7907e9de1', 1000)}
+        alt="A happy dog looking at the camera"
+        width="560"
+        height="560"
+      />
+    </section>
+
+    <section class="stats" aria-label="Dog facts">
+      {facts.map((f) => (
+        <div class="stat">
+          <strong>{f.value}</strong>
+          <span>{f.label}</span>
+        </div>
+      ))}
+    </section>
+
+    <section id="why" class="section">
+      <h2>Why dogs?</h2>
+      <div class="grid three">
+        {features.map((f) => (
+          <article class="card">
+            <span class="icon" aria-hidden="true">{f.icon}</span>
+            <h3>{f.title}</h3>
+            <p>{f.text}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section id="breeds" class="section">
+      <h2>Popular breeds</h2>
+      <div class="grid four">
+        {breeds.map((b) => (
+          <article class="breed">
+            <img src={b.photo} alt={b.name} loading="lazy" width="400" height="300" />
+            <div class="breed-body">
+              <h3>{b.name}</h3>
+              <p>{b.trait}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section id="adopt" class="section adopt">
+      <div>
+        <h2>Ready to adopt?</h2>
+        <p>A few things to think about before bringing a dog home:</p>
+        <ul>
+          {tips.map((t) => <li>{t}</li>)}
+        </ul>
+      </div>
+      <form class="signup" onsubmit="event.preventDefault(); this.querySelector('p').hidden = false;">
+        <label for="email">Get weekly dog tips</label>
+        <div class="field">
+          <input id="email" type="email" placeholder="you@example.com" required />
+          <button class="btn primary" type="submit">Subscribe</button>
+        </div>
+        <p hidden>Thanks! Woof you soon 🐶</p>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>© {new Date().getFullYear()} Good Dogs · Made with Astro and lots of belly rubs.</p>
+  </footer>
+</Layout>
+
+<style>
+  .nav,
+  main,
+  footer {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 20px;
+  }
+
+  .logo {
+    font-weight: 800;
+    font-size: 1.25rem;
+    text-decoration: none;
+  }
+
+  .nav nav {
+    display: flex;
+    gap: 20px;
+  }
+
+  .nav nav a {
+    text-decoration: none;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .nav nav a:hover {
+    color: var(--accent);
+  }
+
+  .hero {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 48px;
+    align-items: center;
+    padding-block: 48px 64px;
+  }
+
+  .eyebrow {
+    color: var(--accent);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.85rem;
+    margin: 0 0 8px;
+  }
+
+  h1 {
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    line-height: 1.1;
+    margin: 0 0 16px;
+  }
+
+  .lead {
+    font-size: 1.15rem;
+    color: var(--muted);
+    margin: 0 0 28px;
+  }
+
+  .hero-img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 32px;
+    box-shadow: 0 24px 60px -24px rgb(224 120 47 / 0.5);
+  }
+
+  .cta-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 12px 22px;
+    border-radius: 999px;
+    font-weight: 600;
+    text-decoration: none;
+    border: 2px solid var(--accent);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .btn.primary {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  .btn.primary:hover {
+    background: var(--accent-dark);
+    border-color: var(--accent-dark);
+  }
+
+  .btn.ghost {
+    color: var(--accent);
+  }
+
+  .btn.ghost:hover {
+    background: var(--soft);
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    background: var(--soft);
+    border-radius: var(--radius);
+    padding: 28px 16px;
+    text-align: center;
+  }
+
+  .stat strong {
+    display: block;
+    font-size: 2rem;
+    color: var(--accent);
+  }
+
+  .stat span {
+    color: var(--muted);
+  }
+
+  .section {
+    padding-block: 72px 0;
+  }
+
+  h2 {
+    font-size: clamp(1.7rem, 3vw, 2.3rem);
+    margin: 0 0 28px;
+  }
+
+  .grid {
+    display: grid;
+    gap: 24px;
+  }
+
+  .grid.three {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .grid.four {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 28px;
+    box-shadow: 0 4px 20px -8px rgb(0 0 0 / 0.12);
+  }
+
+  .card .icon {
+    font-size: 2rem;
+  }
+
+  .card h3 {
+    margin: 12px 0 8px;
+  }
+
+  .card p {
+    margin: 0;
+    color: var(--muted);
+  }
+
+  .breed {
+    background: var(--surface);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 4px 20px -8px rgb(0 0 0 / 0.12);
+    transition: transform 0.2s;
+  }
+
+  .breed:hover {
+    transform: translateY(-4px);
+  }
+
+  .breed img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  .breed-body {
+    padding: 16px 20px 20px;
+  }
+
+  .breed h3 {
+    margin: 0 0 4px;
+    font-size: 1.1rem;
+  }
+
+  .breed p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+
+  .adopt {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+    padding-bottom: 72px;
+  }
+
+  .adopt ul {
+    padding-left: 20px;
+  }
+
+  .adopt li {
+    margin-bottom: 6px;
+  }
+
+  .signup {
+    background: var(--soft);
+    padding: 32px;
+    border-radius: var(--radius);
+  }
+
+  .signup label {
+    display: block;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+  }
+
+  .field {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .field input {
+    flex: 1 1 200px;
+    padding: 12px 16px;
+    border-radius: 999px;
+    border: 1px solid #d9c6b2;
+    font-size: 1rem;
+    background: var(--surface);
+    color: var(--text);
+  }
+
+  .signup p {
+    margin: 12px 0 0;
+    font-weight: 600;
+  }
+
+  footer {
+    border-top: 1px solid var(--soft);
+    padding-block: 24px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 900px) {
+    .grid.four {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .grid.three {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .hero,
+    .adopt {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .hero {
+      padding-block: 24px 40px;
+    }
+    .nav nav {
+      display: none;
+    }
+    .stats {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .grid.four {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

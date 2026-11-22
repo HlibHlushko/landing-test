@@ -1,0 +1,69 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Everything good about dogs, in one place.' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --bg: #fffaf3;
+    --surface: #ffffff;
+    --text: #2b2118;
+    --muted: #6f6256;
+    --accent: #e0782f;
+    --accent-dark: #b85a18;
+    --soft: #fbe9d7;
+    --radius: 18px;
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    color: var(--text);
+    background: var(--bg);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1b1612;
+      --surface: #262019;
+      --text: #f4ece3;
+      --muted: #b6a796;
+      --soft: #33291f;
+    }
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    line-height: 1.6;
+    background: var(--bg);
+  }
+
+  img {
+    max-width: 100%;
+    display: block;
+  }
+
+  a {
+    color: inherit;
+  }
+</style>
